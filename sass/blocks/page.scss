@@ -1,0 +1,35 @@
+.page__body {
+  min-width: 320px;
+  max-width: 100%;
+  overflow-x: hidden;
+  font-family: "PT Sans", "Arial", sans-serif;
+  font-size: 14px;
+  background-color: $default-bg-color;
+
+  &--fixed {
+    overflow: hidden;
+  }
+
+  // Фикс задержки клика для iOS
+  a,
+  button,
+  [role="button"],
+  input,
+  label,
+  select,
+  textarea {
+    touch-action: manipulation;
+  }
+}
+
+.page__wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page__heading {
+
+  &--hidden {
+    @include visually-hidden;
+  }
+}

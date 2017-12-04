@@ -1,0 +1,16 @@
+$blue-decor-color: #81b3d2;
+$controls-color: #e5e5e5;
+$text-note-color: #333333;
+$default-bg-color: #f2f2f2;
+
+$tablet-widths: #{"(min-width: 768px)"};
+$desktop-widths: #{"(min-width: 1200px)"};
+$mobile-only: #{"(max-width: 767px)"};
+$tablet-only: #{"(min-width: 768px) and (max-width: 1199px)"};
+$retina: #{"(min-resolution: 144dpi), (min-resolution: 1.5dppx)"};
+
+$desktop-width: 1200px;
+
+$mobile-margin: 20px;
+$tablet-margin: 60px;
+$desktop-margin: 120px;

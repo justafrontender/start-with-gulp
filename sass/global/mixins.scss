@@ -1,0 +1,18 @@
+@mixin visually-hidden () {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  white-space: nowrap;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+}
+
+@mixin clearfix () {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
