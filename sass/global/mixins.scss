@@ -7,6 +7,7 @@
   white-space: nowrap;
   clip: rect(1px, 1px, 1px, 1px);
   clip-path: inset(50%);
+  overflow: hidden;
 }
 
 @mixin clearfix () {
