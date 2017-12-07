@@ -36,7 +36,7 @@
   },
   "scripts": {
     "editorconfig": "editorconfig-cli",
-    "stylelint": "stylelint 'sass/**/*.scss' --syntax scss",
+    "stylelint": "stylelint 'src/sass/**/*.scss' --syntax scss",
     "test": "npm run editorconfig && npm run stylelint",
     "build": "gulp build",
     "start": "gulp"
@@ -48,12 +48,12 @@
     "iOS 8"
   ],
   "editorconfig-cli": [
-    "*.html",
-    "*.json",
-    "*.js",
-    "js/**/*.js",
-    "img/**/*.svg",
-    "sass/**/*.{sass,scss}"
+    "src/*.html",
+    "src/*.json",
+    "src/*.js",
+    "src/js/**/*.js",
+    "src/img/**/*.svg",
+    "src/sass/**/*.{sass,scss}"
   ],
   "engines": {
     "node": "8.2"
