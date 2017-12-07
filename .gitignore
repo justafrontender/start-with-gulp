@@ -1,4 +1,5 @@
 .DS_Store
+Thumbs.db
 .idea
 *.ai
 *.log
@@ -7,6 +8,4 @@
 *.sublime*
 node_modules/
 npm-debug.*
-Thumbs.db
-sources/
-build/
+design/
