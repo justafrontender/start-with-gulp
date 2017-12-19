@@ -1,0 +1,46 @@
+@font-face {
+  font-family: "PT Sans";
+  font-weight: 400;
+  font-style: normal;
+  src: local("PT Sans"), local("PTSans-Regular"), url("../fonts/ptsans.woff2") format("woff2"), url("../fonts/ptsans.woff") format("woff"); }
+
+@font-face {
+  font-family: "PT Sans";
+  font-weight: 700;
+  font-style: normal;
+  src: local("PT Sans Bold"), local("PTSans-Bold"), url("../fonts/ptsansbold.woff2") format("woff2"), url("../fonts/ptsansbold.woff") format("woff"); }
+
+.page__body {
+  min-width: 320px;
+  max-width: 100%;
+  margin: 0;
+  overflow-x: hidden;
+  font-family: "PT Sans", "Arial", sans-serif;
+  font-size: 14px; }
+  .page__body--fixed {
+    overflow: hidden; }
+  .page__body a,
+  .page__body button,
+  .page__body [role="button"],
+  .page__body input,
+  .page__body label,
+  .page__body select,
+  .page__body textarea {
+    -ms-touch-action: manipulation;
+        touch-action: manipulation; }
+
+.page__wrap {
+  max-width: 1200px;
+  margin: 0 auto; }
+
+.page__heading--hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  white-space: nowrap;
+  clip: rect(1px, 1px, 1px, 1px);
+  -webkit-clip-path: inset(50%);
+          clip-path: inset(50%);
+  overflow: hidden; }

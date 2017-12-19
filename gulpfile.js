@@ -1,9 +1,8 @@
-'use strict';
-
+/* eslint-disable global-require */
 const gulp = require('gulp');
 const server = require('browser-sync').create();
 
-gulp.task('default', function(fn) {
+gulp.task('default', (fn) => {
   const sequence = require('run-sequence');
   sequence(
     'build',
@@ -12,11 +11,9 @@ gulp.task('default', function(fn) {
   );
 });
 
-gulp.task('build', function(fn) {
+gulp.task('build', (fn) => {
   const sequence = require('run-sequence');
   sequence(
-    'eslint',
-    'stylelint',
     'clean',
     'copy',
     'style',
@@ -29,14 +26,13 @@ gulp.task('build', function(fn) {
   );
 });
 
-gulp.task('deploy', function(done) {
+gulp.task('deploy', () => {
   const ghPages = require('gulp-gh-pages');
   return gulp.src('dist/**/*')
     .pipe(ghPages());
-  done();
 });
 
-gulp.task('style', function(done) {
+gulp.task('style', ['stylelint'], () => {
   const rename = require('gulp-rename');
   const plumber = require('gulp-plumber');
   const sass = require('gulp-sass');
@@ -54,10 +50,9 @@ gulp.task('style', function(done) {
     .pipe(rename('style.min.css'))
     .pipe(gulp.dest('dist/css'))
     .pipe(server.stream());
-  done();
 });
 
-gulp.task('serve', function() {
+gulp.task('serve', () => {
   server.init({
     server: 'dist/',
     notify: false,
@@ -72,57 +67,48 @@ gulp.task('serve', function() {
   gulp.watch('src/img/**/*.svg', ['svg:update']);
 });
 
-gulp.task('copy', function(done) {
-  return gulp.src(
-    [
-      'src/fonts/**/*.{woff,woff2}',
-      'src/js/**/*.min.js',
-      'src/*.html',
-      'src/favicons/**/*'
-    ],
-    {
-      base: 'src'
-    }
-  )
-    .pipe(gulp.dest('dist'));
-  done();
-});
+gulp.task('copy', () => gulp.src(
+  [
+    'src/fonts/**/*.{woff,woff2}',
+    'src/js/**/*.min.js',
+    'src/*.html',
+    'src/favicons/**/*'
+  ],
+  {
+    base: 'src'
+  }
+)
+  .pipe(gulp.dest('dist')));
 
-gulp.task('images', function(done) {
+gulp.task('images', () => {
   const imagemin = require('gulp-imagemin');
   return gulp.src('src/img/**/*.{png,jpg,jpeg,gif}', { base: 'src' })
     .pipe(imagemin([
-      imagemin.optipng({optimizationLevel: 3}),
-      imagemin.jpegtran({progressive: true})
+      imagemin.optipng({ optimizationLevel: 3 }),
+      imagemin.jpegtran({ progressive: true })
     ]))
     .pipe(gulp.dest('dist'));
-  done();
 });
 
-gulp.task('webp', function (done) {
+gulp.task('webp', () => {
   const webp = require('gulp-webp');
   return gulp.src('src/img/**/*.{png,jpg}', { base: 'src' })
     .pipe(webp({
       quality: 80
     }))
     .pipe(gulp.dest('dist'));
-  done();
 });
 
-gulp.task('svg', function(done) {
+gulp.task('svg', () => {
   const svgmin = require('gulp-svgmin');
   return gulp.src(['src/img/**/*.svg', '!src/img/**/{icon-,logo-}*.svg'], { base: 'src' })
     .pipe(svgmin())
     .pipe(gulp.dest('dist'));
-  done();
 });
 
-gulp.task('svg:update', ['svg', 'sprite'], function(done) {
-  server.reload();
-  done();
-});
+gulp.task('svg:update', ['svg', 'sprite'], () => server.reload());
 
-gulp.task('sprite', function(done) {
+gulp.task('sprite', () => {
   const rename = require('gulp-rename');
   const svgstore = require('gulp-svgstore');
   return gulp.src('src/img/{icon-,logo-}*.svg')
@@ -131,27 +117,19 @@ gulp.task('sprite', function(done) {
     }))
     .pipe(rename('sprite.svg'))
     .pipe(gulp.dest('dist/img'));
-  done();
 });
 
-gulp.task('clean', function(done) {
+gulp.task('clean', () => {
   const del = require('del');
   return del('dist');
-  done();
 });
 
-gulp.task('html:copy', function(done) {
-  return gulp.src('src/*.html', { base: 'src' })
-    .pipe(gulp.dest('dist'));
-  done();
-});
+gulp.task('html:copy', () => gulp.src('src/*.html', { base: 'src' })
+  .pipe(gulp.dest('dist')));
 
-gulp.task('html:update', ['html:copy'], function(done) {
-  server.reload();
-  done();
-});
+gulp.task('html:update', ['html:copy'], () => server.reload());
 
-gulp.task('js', function(done) {
+gulp.task('js', ['eslint'], () => {
   const rename = require('gulp-rename');
   const babel = require('gulp-babel');
   return gulp.src(['src/js/**/*.js', '!src/js/**/*.min.js'], { base: 'src' })
@@ -167,31 +145,26 @@ gulp.task('js', function(done) {
       suffix: '.min'
     }))
     .pipe(gulp.dest('dist'));
-  done();
 });
 
-gulp.task('eslint', function(done) {
+gulp.task('eslint', () => {
   const eslint = require('gulp-eslint');
   return gulp.src(['src/js/**/*.js', '!src/js/**/*.min.js', '!node_modules/**'])
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());
-  done();
 });
 
-gulp.task('stylelint', function(done) {
+gulp.task('stylelint', () => {
   const stylelint = require('gulp-stylelint');
   return gulp.src('src/sass/**/*.scss')
     .pipe(stylelint({
+      failAfterError: false,
       syntax: 'scss',
       reporters: [
-        {formatter: 'string', console: true}
+        { formatter: 'string', console: true }
       ]
     }));
-  done();
 });
 
-gulp.task('js:update', ['js'], function(done) {
-  server.reload();
-  done();
-});
+gulp.task('js:update', ['js'], () => server.reload());
