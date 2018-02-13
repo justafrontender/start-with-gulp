@@ -16,6 +16,7 @@ gulp.task('build', (fn) => {
   sequence(
     'clean',
     'copy',
+    'html',
     'style',
     'images',
     'webp',
@@ -71,7 +72,6 @@ gulp.task('copy', () => gulp.src(
   [
     'src/fonts/**/*.{woff,woff2}',
     'src/js/**/*.min.js',
-    'src/*.html',
     'src/favicons/**/*'
   ],
   {
@@ -124,10 +124,7 @@ gulp.task('clean', () => {
   return del('dist');
 });
 
-gulp.task('html:copy', () => gulp.src('src/*.html', { base: 'src' })
-  .pipe(gulp.dest('dist')));
-
-gulp.task('html:update', ['html:copy'], () => server.reload());
+gulp.task('html:update', ['html'], () => server.reload());
 
 gulp.task('js', ['eslint'], () => {
   const rename = require('gulp-rename');
@@ -168,3 +165,10 @@ gulp.task('stylelint', () => {
 });
 
 gulp.task('js:update', ['js'], () => server.reload());
+
+gulp.task('html', () => {
+  const htmlmin = require('gulp-htmlmin');
+  return gulp.src('src/*.html')
+    .pipe(htmlmin({ collapseWhitespace: true }))
+    .pipe(gulp.dest('dist'));
+});
